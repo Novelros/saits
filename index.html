@@ -1,11 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <title>детский технопарк "Альтаир"</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="bg-word"></div>
+        <div class="container">
+            <div class="top-row">
+                <div class="main-title-card" id="mainTitleCard">
+                    <img
+                        src="./img/MIREA_Gerb_Colour.png"
+                        alt="Герб Альтаир"
+                        class="main-logo"
+                    />
+                    <span class="main-title">детский технопарк Роман</span>
+                </div>
+
+                <div class="date-widget-card" id="dateWidgetCard">
+                    <div class="weekday-box" id="weekday">ПН</div>
+                    <div class="date-layout">
+                        <div class="fulldate" id="fulldate">25 октября</div>
+                        <div class="bigtime" id="time">13:03</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-widgets">
+                <div class="partners-block">
+                    <div class="partners-title">Партнеры</div>
+                    <div class="partners-grid" id="partnersGrid"></div>
+                </div>
+
+                <div class="info-block">
+                    <div class="weather-card">
+                        <div class="weather-row">
+                            <div class="side-label">
+                                Восход<br /><span
+                                    class="side-small"
+                                    id="sunrise"
+                                    >--:--</span
+                                >
+                            </div>
+                            <div class="weather-main">
+                                <div class="weather-temp" id="weather-temp">
+                                    --
+                                </div>
+                                <div
+                                    class="weather-feel"
+                                    id="weather-feel"
+                                ></div>
+                                <div class="weather-desc" id="weather-desc">
+                                    --
+                                </div>
+                            </div>
+                            <div class="side-label">
+                                Закат<br /><span class="side-small" id="sunset"
+                                    >--:--</span
+                                >
+                            </div>
+                        </div>
+                        <div class="weather-footer">
+                            <div>
+                                <span>Ветер</span><br /><b id="weather-wind"
+                                    >--</b
+                                >
+                            </div>
+                            <div>
+                                <span>Давление</span><br /><b
+                                    id="weather-pressure"
+                                    >--</b
+                                >
+                            </div>
+                            <div>
+                                <span>Влажность</span><br /><b
+                                    id="weather-humidity"
+                                    >--</b
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qr-codes-row">
+                        <div class="qr-cell">
+                            <img
+                                src="./img/QR-code-altair.png"
+                                alt="QR Telegram"
+                            />
+                            <div class="qr-label">
+                                Телеграм канал Детского Технопарка "Альтаир"
+                            </div>
+                        </div>
+                        <div class="qr-cell">
+                            <img src="./img/QR-priem.png" alt="QR Календарь" />
+                            <div class="qr-label">Календарь мероприятий</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-bg" id="modal-bg">
+            <div class="modal-window">
+                <span class="modal-close" id="modal-close">&times;</span>
+                <div class="modal-title" id="modal-title"></div>
+                <div class="modal-text" id="modal-text"></div>
+            </div>
+        </div>
+
+        <script src="bgwords.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>
