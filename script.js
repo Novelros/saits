@@ -73,6 +73,7 @@ const partnersDescriptions = {
     it_school: "Образовательная инициатива Samsung для ИТ-обучения.",
     solar: "Эксперт в кибербезопасности, цифровой защите.",
     rostelecom: "Национальный оператор связи, интернет и цифровые платформы.",
+    rosspace: "Госкорпорация, объединяющая передовые предприятия для освоения и использования космоса в интересах страны.",
 };
 
 let partnerIndex = 0;
@@ -120,6 +121,62 @@ setInterval(() => {
     renderPartners();
 }, 3000);
 
+// Календарь
+function renderCalendar() {
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    const currentDate = now.getDate();
+    
+    // Получаем первый день месяца и количество дней
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+    
+    const monthNames = [
+        'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+    ];
+    
+    let calendarHTML = `
+        <div class="calendar-header">
+            ${monthNames[currentMonth]} ${currentYear}
+        </div>
+        <div class="calendar-weekdays">
+            <div>Пн</div>
+            <div>Вт</div>
+            <div>Ср</div>
+            <div>Чт</div>
+            <div>Пт</div>
+            <div>Сб</div>
+            <div>Вс</div>
+        </div>
+        <div class="calendar-days">
+    `;
+    
+    // Добавляем пустые ячейки для дней предыдущего месяца
+    for (let i = 0; i < (startingDayOfWeek === 0 ? 6 : startingDayOfWeek - 1); i++) {
+        calendarHTML += '<div class="calendar-day other-month"></div>';
+    }
+    
+    // Добавляем дни текущего месяца
+    for (let day = 1; day <= daysInMonth; day++) {
+        const isToday = day === currentDate;
+        const dayOfWeek = new Date(currentYear, currentMonth, day).getDay();
+        const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+        
+        calendarHTML += `
+            <div class="calendar-day ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}">
+                ${day}
+            </div>
+        `;
+    }
+    
+    calendarHTML += '</div>';
+    document.getElementById('calendar').innerHTML = calendarHTML;
+}
+
 // Дата/время
 function leading0(n) {
     return n < 10 ? "0" + n : n;
@@ -154,13 +211,39 @@ function updateDateTime() {
     document.getElementById("time").textContent = `${leading0(
         now.getHours()
     )}:${leading0(now.getMinutes())}`;
-    document.getElementById(
-        "fulldate"
-    ).textContent = `${now.getDate()} ${now.toLocaleString("ru-RU", {
-        month: "long",
-    })}`;
+    
+    // Исправление названий месяцев
+    const monthNames = {
+        'january': 'января',
+        'february': 'февраля', 
+        'march': 'марта',
+        'april': 'апреля',
+        'may': 'мая',
+        'june': 'июня',
+        'july': 'июля',
+        'august': 'августа',
+        'september': 'сентября',
+        'october': 'октября',
+        'november': 'ноября',
+        'december': 'декабря'
+    };
+    
+    const monthKey = now.toLocaleString("en-US", { month: "long" }).toLowerCase();
+    const monthName = monthNames[monthKey] || now.toLocaleString("ru-RU", { month: "long" });
+    
+    document.getElementById("fulldate").textContent = `${now.getDate()} ${monthName}`;
+    
+    // Обновляем календарь
+    renderCalendar();
     setTimeout(syncHeaderBlocks, 50);
 }
+
+// Инициализация календаря при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    renderCalendar();
+    updateDateTime();
+});
+
 setInterval(updateDateTime, 1000);
 updateDateTime();
 
@@ -168,12 +251,35 @@ updateDateTime();
 const API_KEY = "1df2eb92e9b510458f1e2edebaace0eb";
 const CITY = "Moscow";
 
+function getWeatherBackground(weatherCode, isDay) {
+    const weatherBackgrounds = {
+        // Ясная погода
+        '01': isDay ? './img/weather/sunny.gif' : './img/weather/clear-night.gif',
+        // Небольшая облачность
+        '02': isDay ? './img/weather/partly-cloudy.gif' : './img/weather/cloudy-night.gif',
+        // Облачно
+        '03': './img/weather/cloudy.gif',
+        '04': './img/weather/overcast.gif',
+        // Дождь
+        '09': './img/weather/rain.gif',
+        '10': './img/weather/rainy-day.gif',
+        // Гроза
+        '11': './img/weather/thunderstorm.gif',
+        // Снег
+        '13': './img/weather/snow.gif',
+        // Туман
+        '50': './img/weather/fog.gif'
+    };
+    
+    return weatherBackgrounds[weatherCode] || './img/weather/default.gif';
+}
 function fetchWeather() {
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${CITY}&units=metric&lang=ru&appid=${API_KEY}`
     )
         .then((r) => r.json())
         .then((data) => {
+            // Обновляем данные погоды
             document.getElementById("weather-temp").textContent = data.main
                 ? data.main.temp > 0
                     ? `+${Math.round(data.main.temp)}`
@@ -203,18 +309,34 @@ function fetchWeather() {
                 const d = new Date(ts * 1000);
                 return leading0(d.getHours()) + ":" + leading0(d.getMinutes());
             };
-            document.getElementById("sunrise").textContent = formatTime(
+            document.getElementById("sunrise-time").textContent = formatTime(
                 data.sys?.sunrise
             );
-            document.getElementById("sunset").textContent = formatTime(
+            document.getElementById("sunset-time").textContent = formatTime(
                 data.sys?.sunset
             );
+            
+        // Устанавливаем фон погоды в зависимости от условий
+        if (data.weather && data.weather[0]) {
+            const weatherCode = data.weather[0].icon.substring(0, 2);
+            const isDay = data.weather[0].icon.includes('d');
+            const weatherCard = document.getElementById('weatherCard');
+            if (weatherCard) {
+                const background = getWeatherBackground(weatherCode, isDay);
+                weatherCard.style.backgroundImage = `url("${background}")`;
+                weatherCard.style.backgroundSize = 'cover';
+                weatherCard.style.backgroundPosition = 'center';
+                weatherCard.style.backgroundRepeat = 'no-repeat';
+            }
+        }
         })
-        .catch(() => {
+        .catch((error) => {
+            console.error('Ошибка получения погоды:', error);
             document.getElementById("weather-temp").textContent = "--";
             document.getElementById("weather-feel").textContent = "";
             document.getElementById("weather-desc").textContent = "";
         });
 }
+
 fetchWeather();
 setInterval(fetchWeather, 600000);

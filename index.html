@@ -2,7 +2,7 @@
 <html lang="ru">
     <head>
         <meta charset="UTF-8" />
-        <title>детский технопарк "Альтаир"</title>
+        <title>Детский технопарк «Альтаир»</title>
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
@@ -15,7 +15,7 @@
                         alt="Герб Альтаир"
                         class="main-logo"
                     />
-                    <span class="main-title">детский технопарк Роман</span>
+                    <span class="main-title">Детский технопарк «Альтаир»</span>
                 </div>
 
                 <div class="date-widget-card" id="dateWidgetCard">
@@ -23,6 +23,9 @@
                     <div class="date-layout">
                         <div class="fulldate" id="fulldate">25 октября</div>
                         <div class="bigtime" id="time">13:03</div>
+                    </div>
+                    <div class="calendar-container">
+                        <div id="calendar"></div>
                     </div>
                 </div>
             </div>
@@ -34,54 +37,6 @@
                 </div>
 
                 <div class="info-block">
-                    <div class="weather-card">
-                        <div class="weather-row">
-                            <div class="side-label">
-                                Восход<br /><span
-                                    class="side-small"
-                                    id="sunrise"
-                                    >--:--</span
-                                >
-                            </div>
-                            <div class="weather-main">
-                                <div class="weather-temp" id="weather-temp">
-                                    --
-                                </div>
-                                <div
-                                    class="weather-feel"
-                                    id="weather-feel"
-                                ></div>
-                                <div class="weather-desc" id="weather-desc">
-                                    --
-                                </div>
-                            </div>
-                            <div class="side-label">
-                                Закат<br /><span class="side-small" id="sunset"
-                                    >--:--</span
-                                >
-                            </div>
-                        </div>
-                        <div class="weather-footer">
-                            <div>
-                                <span>Ветер</span><br /><b id="weather-wind"
-                                    >--</b
-                                >
-                            </div>
-                            <div>
-                                <span>Давление</span><br /><b
-                                    id="weather-pressure"
-                                    >--</b
-                                >
-                            </div>
-                            <div>
-                                <span>Влажность</span><br /><b
-                                    id="weather-humidity"
-                                    >--</b
-                                >
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="qr-codes-row">
                         <div class="qr-cell">
                             <img
@@ -89,12 +44,42 @@
                                 alt="QR Telegram"
                             />
                             <div class="qr-label">
-                                Телеграм канал Детского Технопарка "Альтаир"
+                                Детский технопарк
+                                «Альтаир»
                             </div>
                         </div>
                         <div class="qr-cell">
                             <img src="./img/QR-priem.png" alt="QR Календарь" />
                             <div class="qr-label">Календарь мероприятий</div>
+                        </div>
+                    </div>
+
+                    <div class="weather-card" id="weatherCard">
+                        <div class="weather-content">
+                            <div class="weather-row">
+                                <div class="side-label">
+                                    Восход<br /><span class="side-small" id="sunrise-time">--:--</span>
+                                </div>
+                                <div class="weather-main">
+                                    <div class="weather-temp" id="weather-temp">--</div>
+                                    <div class="weather-feel" id="weather-feel"></div>
+                                    <div class="weather-desc" id="weather-desc">--</div>
+                                </div>
+                                <div class="side-label">
+                                    Закат<br /><span class="side-small" id="sunset-time">--:--</span>
+                                </div>
+                            </div>
+                            <div class="weather-footer">
+                                <div>
+                                    <span>Ветер</span><br /><b id="weather-wind">--</b>
+                                </div>
+                                <div>
+                                    <span>Давление</span><br /><b id="weather-pressure">--</b>
+                                </div>
+                                <div>
+                                    <span>Влажность</span><br /><b id="weather-humidity">--</b>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
