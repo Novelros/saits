@@ -105,7 +105,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 13px 20px;
+    padding: 13px 10px;
     flex: 1;
 }
 
@@ -279,33 +279,59 @@ body {
     font-size: 2.5vw;
     color: #2476ce;
     font-weight: 900;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8),
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
 }
 
 .weather-feel {
     font-size: 1vw;
-    color: #4294e1;
+    color: #ffffff;
     text-align: center;
     margin-bottom: 5px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8),
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
+    font-weight: 600;
 }
 
 .weather-desc {
     font-size: 1.1vw;
-    color: #2c3e50;
+    color: #ffffff;
     font-weight: 500;
     margin-top: 4px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8),
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
 }
 
 .side-label {
-    color: #2767af;
+    color: #ffffff;
     font-size: 1vw;
     font-weight: 600;
     text-align: center;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8),
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
 }
 
 .side-small {
-    color: #2261b4;
+    color: #ffffff;
     font-size: 1.07vw;
     font-weight: 800;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8),
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
 }
 
 .weather-footer {
@@ -314,21 +340,31 @@ body {
     align-items: center;
     border-radius: 0 0 23px 23px;
     font-size: 1vw;
-    color: #2261b4;
-    font-weight: 500;
+    color: white;
+    font-weight: 600;
     padding: 1vw 2vw;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
     gap: 20px;
 }
 
 .weather-footer div {
     text-align: center;
+    padding: 5px 10px;
 }
 
 .weather-footer b {
     font-size: 1.1vw;
-    color: #3681df;
+    color: white;
     font-weight: 800;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+.sunrise-container,
+.sunset-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .qr-codes-block {
@@ -338,7 +374,7 @@ body {
 .qr-codes-vertical {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
 }
 
 .qr-item {
@@ -357,7 +393,7 @@ body {
     border-radius: 15px;
     border: 1.5px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
-    padding: 15px;
+    padding: 12px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
@@ -470,7 +506,7 @@ body {
     width: 125px;
     background: white;
     border-radius: 8px;
-    padding: 10px;
+    padding: 5px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
