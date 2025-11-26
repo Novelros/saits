@@ -82,7 +82,7 @@ function renderPartners() {
     if (!grid) return;
     grid.innerHTML = "";
     const N = partnersAll.length;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 4; i++) {
         const p = partnersAll[(partnerIndex + i) % N];
         const cell = document.createElement("div");
         cell.className = "partner-cell";
@@ -117,7 +117,7 @@ document.getElementById("modal-bg").onclick = (e) => {
 
 renderPartners();
 setInterval(() => {
-    partnerIndex = (partnerIndex + 6) % partnersAll.length;
+    partnerIndex = (partnerIndex + 4) % partnersAll.length;
     renderPartners();
 }, 3000);
 
