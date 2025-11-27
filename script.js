@@ -1,4 +1,3 @@
-// Синхронизация высоты
 function syncHeaderBlocks() {
     const titleCard = document.getElementById("mainTitleCard");
     const dateCard = document.getElementById("dateWidgetCard");
@@ -9,7 +8,6 @@ function syncHeaderBlocks() {
 window.addEventListener("resize", syncHeaderBlocks);
 window.addEventListener("DOMContentLoaded", syncHeaderBlocks);
 
-// Партнёры
 const partnersAll = [
     {
         src: "./img/Rostec.png",
@@ -77,24 +75,107 @@ const partnersDescriptions = {
 };
 
 let partnerIndex = 0;
+let isAnimating = false;
+let currentPage = 0;
+const PARTNERS_PER_PAGE = 4;
+
+function updatePaginationDots() {
+    const dots = document.querySelectorAll('.pagination-dot');
+    const totalPages = Math.ceil(partnersAll.length / PARTNERS_PER_PAGE);
+    
+    dots.forEach((dot, index) => {
+        if (index < totalPages) {
+            dot.style.display = 'block';
+            if (index === currentPage) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        } else {
+            dot.style.display = 'none';
+        }
+    });
+}
+
 function renderPartners() {
     const grid = document.getElementById("partnersGrid");
+    const pagination = document.getElementById("partnersPagination");
     if (!grid) return;
+    
+    if (!pagination) {
+        const newPagination = document.createElement('div');
+        newPagination.id = 'partnersPagination';
+        newPagination.className = 'pagination-dots';
+        newPagination.innerHTML = `
+            <span class="pagination-dot active"></span>
+            <span class="pagination-dot"></span>
+            <span class="pagination-dot"></span>
+        `;
+        const partnersBlock = document.querySelector('.partners-block');
+        if (partnersBlock) {
+            partnersBlock.appendChild(newPagination);
+        }
+    }
+    
     grid.innerHTML = "";
-    const N = partnersAll.length;
-    for (let i = 0; i < 4; i++) {
-        const p = partnersAll[(partnerIndex + i) % N];
+    
+    const startIndex = partnerIndex;
+    const endIndex = Math.min(startIndex + PARTNERS_PER_PAGE, partnersAll.length);
+    
+    for (let i = startIndex; i < endIndex; i++) {
+        const p = partnersAll[i];
         const cell = document.createElement("div");
         cell.className = "partner-cell";
+        cell.style.animationDelay = `${(i - startIndex) * 0.1}s`;
         cell.setAttribute("data-partner", p.key);
         cell.innerHTML = `<img src="${p.src}" alt="${p.alt}"><div class="partner-name">${p.name}</div>`;
         grid.appendChild(cell);
     }
+    
+    const remaining = PARTNERS_PER_PAGE - (endIndex - startIndex);
+    for (let i = 0; i < remaining; i++) {
+        const cell = document.createElement("div");
+        cell.className = "partner-cell empty-cell";
+        cell.innerHTML = `<div class="empty-partner"></div>`;
+        grid.appendChild(cell);
+    }
+    
+    updatePaginationDots();
     bindModals();
 }
 
+function nextPartners() {
+    if (isAnimating) return;
+    
+    isAnimating = true;
+    const grid = document.getElementById("partnersGrid");
+    
+    grid.classList.add('partners-slide-out');
+    
+    setTimeout(() => {
+        partnerIndex += PARTNERS_PER_PAGE;
+        
+        if (partnerIndex >= partnersAll.length) {
+            partnerIndex = 0;
+            currentPage = 0;
+        } else {
+            currentPage = Math.floor(partnerIndex / PARTNERS_PER_PAGE);
+        }
+        
+        renderPartners();
+        
+        grid.classList.remove('partners-slide-out');
+        grid.classList.add('partners-slide-in');
+        
+        setTimeout(() => {
+            grid.classList.remove('partners-slide-in');
+            isAnimating = false;
+        }, 500);
+    }, 300);
+}
+
 function bindModals() {
-    document.querySelectorAll(".partner-cell").forEach((el) => {
+    document.querySelectorAll(".partner-cell:not(.empty-cell)").forEach((el) => {
         el.onclick = () => {
             const key = el.getAttribute("data-partner");
             document.getElementById("modal-title").textContent =
@@ -115,20 +196,260 @@ document.getElementById("modal-bg").onclick = (e) => {
     }
 };
 
-renderPartners();
-setInterval(() => {
-    partnerIndex = (partnerIndex + 4) % partnersAll.length;
-    renderPartners();
-}, 3000);
+let newsItems = [];
+let currentNewsIndex = 0;
+let isNewsAnimating = false;
 
-// Календарь
+const SHEET_ID = '1-5EIIj6J6cqSHiEe0MaSiG9LhMBoBrRp_V_5queOcJQ';
+
+async function fetchNewsFromGoogleSheets() {
+    try {
+        const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
+        
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const text = await response.text();
+        const json = JSON.parse(text.substring(47, text.length - 2));
+        
+        return parseSheetData(json);
+        
+    } catch (error) {
+        try {
+            const proxyUrl = 'https://api.allorigins.win/raw?url=';
+            const encodedUrl = encodeURIComponent(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`);
+            
+            const response = await fetch(proxyUrl + encodedUrl);
+            const text = await response.text();
+            const json = JSON.parse(text.substring(47, text.length - 2));
+            
+            return parseSheetData(json);
+            
+        } catch (proxyError) {
+            return null;
+        }
+    }
+}
+
+function parseSheetData(json) {
+    const newsItems = [];
+    
+    if (json.table && json.table.rows) {
+        let startIndex = 0;
+        
+        if (json.table.rows[0] && json.table.rows[0].c) {
+            const firstRow = json.table.rows[0].c;
+            const firstTitle = firstRow[1]?.v || '';
+            const firstDate = firstRow[0]?.v || '';
+            
+            if (firstTitle.toLowerCase().includes('заголовок') || 
+                firstDate.toLowerCase().includes('дата')) {
+                startIndex = 1;
+            }
+        }
+        
+        for (let i = startIndex; i < json.table.rows.length; i++) {
+            const row = json.table.rows[i];
+            const cells = row.c;
+            
+            if (cells && cells.length >= 2) {
+                const title = cells[1]?.v || '';
+                const dateValue = cells[0]?.v || '';
+                
+                let formattedDate = '';
+                if (dateValue) {
+                    if (typeof dateValue === 'string' && dateValue.startsWith('Date(')) {
+                        formattedDate = parseDateObject(dateValue);
+                    } else {
+                        formattedDate = dateValue;
+                    }
+                } else {
+                    formattedDate = formatCurrentDate();
+                }
+                
+                if (title && title.trim() !== '') {
+                    newsItems.push({
+                        title: title,
+                        date: formattedDate,
+                        link: '#'
+                    });
+                }
+            }
+        }
+    }
+    
+    return newsItems;
+}
+
+function parseDateObject(dateString) {
+    try {
+        const match = dateString.match(/Date\((\d+),(\d+),(\d+)\)/);
+        if (match) {
+            const year = parseInt(match[1]);
+            const month = parseInt(match[2]) + 1;
+            const day = parseInt(match[3]);
+            
+            return `${day.toString().padStart(2, '0')}.${month.toString().padStart(2, '0')}.${year}`;
+        }
+    } catch (error) {
+    }
+    
+    return formatCurrentDate();
+}
+
+function formatCurrentDate() {
+    const now = new Date();
+    const day = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const year = now.getFullYear();
+    return `${day}.${month}.${year}`;
+}
+
+function createDemoNews() {
+    const demoNews = [
+        {
+            title: "Более 800 абитуриентов посетили День открытых дверей",
+            date: "17.11.2024",
+            link: "#"
+        },
+        {
+            title: "РТУ МИРЭА приглашает к участию в олимпиаде",
+            date: "27.11.2024",
+            link: "#"
+        }
+    ];
+    
+    return demoNews;
+}
+
+async function initializeNews() {
+    let loadedNews = await fetchNewsFromGoogleSheets();
+    
+    if (!loadedNews || loadedNews.length === 0) {
+        loadedNews = createDemoNews();
+    }
+    
+    newsItems = loadedNews;
+    
+    if (newsItems.length > 0) {
+        renderNews();
+        setupNewsPagination();
+        return true;
+    }
+    
+    return false;
+}
+
+async function updateNews() {
+    const loadedNews = await fetchNewsFromGoogleSheets();
+    
+    if (loadedNews && loadedNews.length > 0) {
+        newsItems = loadedNews;
+        
+        if (currentNewsIndex >= newsItems.length) {
+            currentNewsIndex = 0;
+        }
+        
+        renderNews();
+        setupNewsPagination();
+    }
+}
+
+function renderNews() {
+    const content = document.querySelector('.important-content');
+    if (!content || newsItems.length === 0) {
+        return;
+    }
+    
+    const currentNews = newsItems[currentNewsIndex];
+    
+    content.innerHTML = `
+        <div class="news-item ${isNewsAnimating ? 'news-slide-out' : ''}">
+            <div class="news-title">${currentNews.title}</div>
+            <div class="news-date">${currentNews.date}</div>
+        </div>
+    `;
+    
+    if (isNewsAnimating) {
+        setTimeout(() => {
+            content.innerHTML = `
+                <div class="news-item news-slide-in">
+                    <div class="news-title">${currentNews.title}</div>
+                    <div class="news-date">${currentNews.date}</div>
+                </div>
+            `;
+            
+            setTimeout(() => {
+                isNewsAnimating = false;
+            }, 500);
+        }, 300);
+    }
+    
+    updateNewsPagination();
+}
+
+function setupNewsPagination() {
+    const importantBlock = document.querySelector('.important-block');
+    if (!importantBlock) return;
+    
+    const oldPagination = importantBlock.querySelector('.news-pagination');
+    if (oldPagination) {
+        oldPagination.remove();
+    }
+    
+    const pagination = document.createElement('div');
+    pagination.className = 'news-pagination';
+    
+    let dotsHtml = '';
+    const dotsToShow = Math.min(newsItems.length, 5);
+    
+    for (let i = 0; i < dotsToShow; i++) {
+        dotsHtml += `<span class="news-dot ${i === currentNewsIndex ? 'active' : ''}" data-index="${i}"></span>`;
+    }
+    
+    pagination.innerHTML = dotsHtml;
+    importantBlock.appendChild(pagination);
+    
+    pagination.querySelectorAll('.news-dot').forEach(dot => {
+        dot.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            if (index !== currentNewsIndex && !isNewsAnimating) {
+                currentNewsIndex = index;
+                isNewsAnimating = true;
+                renderNews();
+            }
+        });
+    });
+}
+
+function updateNewsPagination() {
+    const dots = document.querySelectorAll('.news-dot');
+    dots.forEach((dot, index) => {
+        if (index === currentNewsIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+function nextNews() {
+    if (isNewsAnimating || newsItems.length === 0) return;
+    
+    isNewsAnimating = true;
+    currentNewsIndex = (currentNewsIndex + 1) % newsItems.length;
+    renderNews();
+}
+
 function renderCalendar() {
     const now = new Date();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
     const currentDate = now.getDate();
     
-    // Получаем первый день месяца и количество дней
     const firstDay = new Date(currentYear, currentMonth, 1);
     const lastDay = new Date(currentYear, currentMonth + 1, 0);
     const daysInMonth = lastDay.getDate();
@@ -155,12 +476,10 @@ function renderCalendar() {
         <div class="calendar-days">
     `;
     
-    // Добавляем пустые ячейки для дней предыдущего месяца
     for (let i = 0; i < (startingDayOfWeek === 0 ? 6 : startingDayOfWeek - 1); i++) {
         calendarHTML += '<div class="calendar-day other-month"></div>';
     }
     
-    // Добавляем дни текущего месяца
     for (let day = 1; day <= daysInMonth; day++) {
         const isToday = day === currentDate;
         const dayOfWeek = new Date(currentYear, currentMonth, day).getDay();
@@ -177,32 +496,11 @@ function renderCalendar() {
     document.getElementById('calendar').innerHTML = calendarHTML;
 }
 
-// Дата/время
 function leading0(n) {
     return n < 10 ? "0" + n : n;
 }
 function getRuWeekday(d) {
     return ["ВС", "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"][d.getDay()];
-}
-function getStudyWeek(now) {
-    let year = now.getFullYear(),
-        startMonth,
-        startYear;
-    if (now.getMonth() + 1 >= 9) {
-        startMonth = 8;
-        startYear = year;
-    } else if (now.getMonth() + 1 >= 2) {
-        startMonth = 1;
-        startYear = year;
-    } else {
-        startMonth = 8;
-        startYear = year - 1;
-    }
-    let start = new Date(startYear, startMonth, 1);
-    while (start.getDay() !== 1) start.setDate(start.getDate() + 1);
-    let diff = now - start;
-    let weekNum = Math.floor(diff / (1000 * 60 * 60 * 24 * 7)) + 1;
-    return weekNum < 1 ? 1 : weekNum;
 }
 
 function updateDateTime() {
@@ -212,7 +510,6 @@ function updateDateTime() {
         now.getHours()
     )}:${leading0(now.getMinutes())}`;
     
-    // Исправление названий месяцев
     const monthNames = {
         'january': 'января',
         'february': 'февраля', 
@@ -233,53 +530,35 @@ function updateDateTime() {
     
     document.getElementById("fulldate").textContent = `${now.getDate()} ${monthName}`;
     
-    // Обновляем календарь
     renderCalendar();
     setTimeout(syncHeaderBlocks, 50);
 }
 
-// Инициализация календаря при загрузке
-document.addEventListener('DOMContentLoaded', function() {
-    renderCalendar();
-    updateDateTime();
-});
-
-setInterval(updateDateTime, 1000);
-updateDateTime();
-
-// Погода
 const API_KEY = "1df2eb92e9b510458f1e2edebaace0eb";
 const CITY = "Moscow";
 
 function getWeatherBackground(weatherCode, isDay) {
     const weatherBackgrounds = {
-        // Ясная погода
         '01': isDay ? './img/weather/sunny.gif' : './img/weather/clear-night.gif',
-        // Небольшая облачность
         '02': isDay ? './img/weather/partly-cloudy.gif' : './img/weather/cloudy-night.gif',
-        // Облачно
         '03': './img/weather/cloudy.gif',
         '04': './img/weather/overcast.gif',
-        // Дождь
         '09': './img/weather/rain.gif',
         '10': './img/weather/rainy-day.gif',
-        // Гроза
         '11': './img/weather/thunderstorm.gif',
-        // Снег
         '13': './img/weather/snow.gif',
-        // Туман
         '50': './img/weather/fog.gif'
     };
     
     return weatherBackgrounds[weatherCode] || './img/weather/default.gif';
 }
+
 function fetchWeather() {
     fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${CITY}&units=metric&lang=ru&appid=${API_KEY}`
     )
         .then((r) => r.json())
         .then((data) => {
-            // Обновляем данные погоды
             document.getElementById("weather-temp").textContent = data.main
                 ? data.main.temp > 0
                     ? `+${Math.round(data.main.temp)}`
@@ -314,9 +593,7 @@ function fetchWeather() {
             );
             document.getElementById("sunset-time").textContent = formatTime(
                 data.sys?.sunset
-            );
-            
-        // Устанавливаем фон погоды в зависимости от условий
+            );        
         if (data.weather && data.weather[0]) {
             const weatherCode = data.weather[0].icon.substring(0, 2);
             const isDay = data.weather[0].icon.includes('d');
@@ -338,5 +615,20 @@ function fetchWeather() {
         });
 }
 
-fetchWeather();
-setInterval(fetchWeather, 600000);
+document.addEventListener('DOMContentLoaded', function() {
+    renderPartners();
+    setInterval(nextPartners, 4000);
+    
+    initializeNews();
+    
+    setInterval(updateNews, 60000);
+    
+    setInterval(nextNews, 10000);
+    
+    renderCalendar();
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+    
+    fetchWeather();
+    setInterval(fetchWeather, 600000);
+});
