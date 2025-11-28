@@ -2,7 +2,7 @@ body {
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Montserrat', 'Open Sans', 'Ubuntu', 'Tahoma', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background: linear-gradient(to left, #1A59B0, #1A59B0, #1A59B0);
     background-size: 400% 100%;
     animation: gradientMove 60s ease infinite;
@@ -162,17 +162,19 @@ body {
     width: 100%;
 }
 
+
 .important-block {
-    border-radius: 26px;
-    background: rgba(255, 255, 255, 0.7);
-    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 1);
     backdrop-filter: blur(10px);
-    padding: 32px 26px 28px 26px;
+    padding: 32px 26px 12px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 200px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
 /* Убираем старый заголовок из блока */
@@ -191,6 +193,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 .partners-title {
@@ -202,7 +205,22 @@ body {
     width: 100%;
 }
 
-/* Анимации для партнеров */
+/* Контейнер для партнеров с таким же фоном как у новостей */
+.partners-container {
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 1);
+    backdrop-filter: blur(10px);
+    padding: 32px 26px 28px 26px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    position: relative;
+}
+
 .partners-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -212,18 +230,18 @@ body {
 }
 
 .partner-cell {
-    background: rgba(255, 255, 255, 0.7);
-    border: 2px solid #b3d9f7;
-    border-radius: 15px;
-    box-shadow: 0 3px 12px #8db3e633;
-    min-width: 60px;
-    min-height: 70px;
+    background: rgba(255, 255, 255, 1);
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px #8db3e633;
+    min-width: 90px;
+    min-height: 90px;
     aspect-ratio: 1/1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 8px;
+    padding: 13px;
     cursor: pointer;
     transition: all 0.2s ease;
     opacity: 1;
@@ -249,70 +267,33 @@ body {
     font-size: 24px;
 }
 
-/* Анимация выхода вправо */
-.partners-slide-out .partner-cell {
-    animation: slideOutRight 0.3s ease forwards;
-}
-
-@keyframes slideOutRight {
-    from {
-        opacity: 1;
-        transform: translateX(0);
-    }
-    to {
-        opacity: 0;
-        transform: translateX(100px);
-    }
-}
-
-/* Анимация входа слева */
-.partners-slide-in .partner-cell {
-    animation: slideInLeft 0.5s ease forwards;
-    opacity: 0;
-    transform: translateX(-100px);
-}
-
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-100px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Пагинация справа */
-.partners-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-}
-
-.pagination-dots {
+/* Пагинация для партнеров - СПРАВА как у новостей */
+.partners-pagination {
     position: absolute;
-    right: -40px;
+    right: 5px;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
-.pagination-dot {
-    width: 8px;
-    height: 8px;
+.partners-pagination-dot {
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 1);
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
-.pagination-dot.active {
-    background: #ffffff;
+.partners-pagination-dot.active {
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     transform: scale(1.2);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
 }
 
 .partner-cell:hover:not(.empty-cell) {
@@ -690,7 +671,7 @@ body {
 
 .news-title {
     font-size: 1.8vw;
-    color: #000000;
+    color: #ffffff;
     line-height: 1.4;
     font-weight: 700;
     margin-bottom: 8px;
@@ -699,7 +680,7 @@ body {
 
 .news-date {
     font-size: 1.1vw;
-    color: #666;
+    color: #cccccc;
     font-weight: 500;
     text-align: left;
 }
@@ -725,7 +706,6 @@ body {
     opacity: 0;
     transform: translateX(100px);
 }
-
 
 @keyframes newsSlideIn {
     from {
@@ -753,15 +733,16 @@ body {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: #909090; 
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 1);
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
 }
 
 .news-dot.active {
-    background: #ffffff; 
-    border: 1px solid #000000; 
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     transform: scale(1.2);
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
 }

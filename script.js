@@ -80,41 +80,44 @@ let currentPage = 0;
 const PARTNERS_PER_PAGE = 4;
 
 function updatePaginationDots() {
-    const dots = document.querySelectorAll('.pagination-dot');
+    const dotsContainer = document.getElementById('partnersPagination');
+    if (!dotsContainer) return;
+    
     const totalPages = Math.ceil(partnersAll.length / PARTNERS_PER_PAGE);
     
-    dots.forEach((dot, index) => {
-        if (index < totalPages) {
-            dot.style.display = 'block';
-            if (index === currentPage) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
+    let dotsHtml = '';
+    for (let i = 0; i < totalPages; i++) {
+        dotsHtml += `<span class="partners-pagination-dot ${i === currentPage ? 'active' : ''}" data-page="${i}"></span>`;
+    }
+    
+    dotsContainer.innerHTML = dotsHtml;
+    
+    // Добавляем обработчики клика на точки
+    dotsContainer.querySelectorAll('.partners-pagination-dot').forEach(dot => {
+        dot.addEventListener('click', function() {
+            const page = parseInt(this.getAttribute('data-page'));
+            if (page !== currentPage && !isAnimating) {
+                currentPage = page;
+                partnerIndex = page * PARTNERS_PER_PAGE;
+                renderPartners();
             }
-        } else {
-            dot.style.display = 'none';
-        }
+        });
     });
 }
 
 function renderPartners() {
     const grid = document.getElementById("partnersGrid");
-    const pagination = document.getElementById("partnersPagination");
-    if (!grid) return;
+    const container = document.querySelector('.partners-container');
     
-    if (!pagination) {
-        const newPagination = document.createElement('div');
-        newPagination.id = 'partnersPagination';
-        newPagination.className = 'pagination-dots';
-        newPagination.innerHTML = `
-            <span class="pagination-dot active"></span>
-            <span class="pagination-dot"></span>
-            <span class="pagination-dot"></span>
-        `;
-        const partnersBlock = document.querySelector('.partners-block');
-        if (partnersBlock) {
-            partnersBlock.appendChild(newPagination);
-        }
+    if (!grid || !container) return;
+    
+    // Создаем контейнер для пагинации если его нет
+    let paginationContainer = document.getElementById('partnersPagination');
+    if (!paginationContainer) {
+        paginationContainer = document.createElement('div');
+        paginationContainer.id = 'partnersPagination';
+        paginationContainer.className = 'partners-pagination';
+        container.appendChild(paginationContainer);
     }
     
     grid.innerHTML = "";
@@ -126,7 +129,6 @@ function renderPartners() {
         const p = partnersAll[i];
         const cell = document.createElement("div");
         cell.className = "partner-cell";
-        cell.style.animationDelay = `${(i - startIndex) * 0.1}s`;
         cell.setAttribute("data-partner", p.key);
         cell.innerHTML = `<img src="${p.src}" alt="${p.alt}"><div class="partner-name">${p.name}</div>`;
         grid.appendChild(cell);
@@ -148,31 +150,21 @@ function nextPartners() {
     if (isAnimating) return;
     
     isAnimating = true;
-    const grid = document.getElementById("partnersGrid");
     
-    grid.classList.add('partners-slide-out');
+    // Просто меняем индекс без анимации
+    partnerIndex += PARTNERS_PER_PAGE;
     
-    setTimeout(() => {
-        partnerIndex += PARTNERS_PER_PAGE;
-        
-        if (partnerIndex >= partnersAll.length) {
-            partnerIndex = 0;
-            currentPage = 0;
-        } else {
-            currentPage = Math.floor(partnerIndex / PARTNERS_PER_PAGE);
-        }
-        
-        renderPartners();
-        
-        grid.classList.remove('partners-slide-out');
-        grid.classList.add('partners-slide-in');
-        
-        setTimeout(() => {
-            grid.classList.remove('partners-slide-in');
-            isAnimating = false;
-        }, 500);
-    }, 300);
+    if (partnerIndex >= partnersAll.length) {
+        partnerIndex = 0;
+        currentPage = 0;
+    } else {
+        currentPage = Math.floor(partnerIndex / PARTNERS_PER_PAGE);
+    }
+    
+    renderPartners();
+    isAnimating = false;
 }
+
 
 function bindModals() {
     document.querySelectorAll(".partner-cell:not(.empty-cell)").forEach((el) => {
