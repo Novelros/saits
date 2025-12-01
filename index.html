@@ -23,7 +23,7 @@
             </div>
             <div class="main-widgets">
                 <div>
-                    <!-- Новый блок для новостей как у партнеров -->
+                    <!-- Новости -->
                     <div class="admission-news-block">
                         <div class="admission-news-title">Новости детского технопарка</div>
                         <div class="important-block">
@@ -33,53 +33,65 @@
                         </div>
                     </div>
 
-                  
+                    <!-- Партнеры -->
                     <div class="partners-block">
                         <div class="partners-title">Индустриальные партнеры</div>
                         <div class="partners-container">
-                                <div id="partnersGrid" class="partners-grid"></div>
-                            </div>
+                            <div id="partnersGrid" class="partners-grid"></div>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- ПРАВАЯ ПОЛОВИНА (50%) -->
                 <div class="info-block">
                     <div class="date-weather-row">
-                        <div class="date-widget-card" id="dateWidgetCard">
-                            <div class="weekday-box" id="weekday">ПН</div>
-                            <div class="date-layout">
-                                <div class="fulldate" id="fulldate">25 октября</div>
-                                <div class="bigtime" id="time">13:03</div>
+                        <!-- БЛОК ВРЕМЕНИ И ПОГОДЫ КАК В ПЕРВОМ ПРИМЕРЕ -->
+                        <div class="weather-time-wrapper">
+                            <!-- БЕЛАЯ КАРТОЧКА ВРЕМЕНИ -->
+                            <div class="time-card">
+                                <div class="time-big" id="time">10:30</div>
+                                <div class="time-date">
+                                    <div class="time-weekday" id="weekdayText">Понедельник</div>
+                                    <div class="time-fulldate" id="fulldate">24 ноября</div>
+                                </div>
                             </div>
-                            <div class="calendar-container">
-                                <div id="calendar"></div>
-                            </div>
-                        </div>
 
-                        <div class="weather-card" id="weatherCard">
-                            <div class="weather-content">
-                                <div class="weather-row">
-                                    <div class="side-label">
-                                        Восход<br /><span class="side-small" id="sunrise-time">--:--</span>
+                            <!-- КАРТОЧКА ПОГОДЫ -->
+                            <div class="weather-card">
+                                <div class="weather-main-row">
+                                    <!-- БОЛЬШАЯ КАРТИНКА ПОГОДЫ -->
+                                    <div class="weather-icon-large" id="weather-icon">
+                                        <!-- Здесь будет картинка погоды -->
                                     </div>
                                     <div class="weather-main">
                                         <div class="weather-temp" id="weather-temp">--</div>
                                         <div class="weather-feel" id="weather-feel"></div>
                                         <div class="weather-desc" id="weather-desc">--</div>
                                     </div>
-                                    <div class="side-label">
-                                        Закат<br /><span class="side-small" id="sunset-time">--:--</span>
+                                    <div class="sun-block">
+                                        <div class="sun-row">
+                                            Восход:
+                                            <span class="sun-time" id="sunrise">--:--</span>
+                                        </div>
+                                        <div class="sun-row">
+                                            Закат:
+                                            <span class="sun-time" id="sunset">--:--</span>
+                                        </div>
                                     </div>
                                 </div>
+
                                 <div class="weather-footer">
-                                    <div>
-                                        <span>Ветер</span><br /><b id="weather-wind">--</b>
+                                    <div class="weather-item">
+                                        <span>Ветер</span><br />
+                                        <b id="weather-wind">--</b>
                                     </div>
-                                    <div>
-                                        <span>Давление</span><br /><b id="weather-pressure">--</b>
+                                    <div class="weather-item">
+                                        <span>Давление</span><br />
+                                        <b id="weather-pressure">--</b>
                                     </div>
-                                    <div>
-                                        <span>Влажность</span><br /><b id="weather-humidity">--</b>
+                                    <div class="weather-item">
+                                        <span>Влажность</span><br />
+                                        <b id="weather-humidity">--</b>
                                     </div>
                                 </div>
                             </div>
@@ -113,6 +125,7 @@
             </div>
         </div>
 
+        <!-- Модальное окно -->
         <div class="modal-bg" id="modal-bg">
             <div class="modal-window">
                 <span class="modal-close" id="modal-close">&times;</span>
