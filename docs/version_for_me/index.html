@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=0.95">
+        <title>Детский технопарк «Альтаир»</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div class="bg-words"></div>
+        <div class="container">
+            <div class="top-row">
+                <div class="main-title-card" id="mainTitleCard">
+                    <span class="main-title">Добро пожаловать в клуб крошка!</span>
+                    <span class="main-subtitle">«что-то важное»</span>
+                </div>
+                <div> 
+                    <img
+                        src="./img/logo.png"
+                        alt="Герб Альтаир"
+                        class="main-logo"
+                    />
+                </div>
+            </div>
+            <div class="main-widgets">
+                <div>
+                    <div class="admission-news-block">
+                        <div class="admission-news-title">Новости и желания</div>
+                        <div class="important-block">
+                            <div class="important-content"></div>
+                        </div>
+                    </div>
+
+                    <div class="partners-block">
+                        <div class="partners-title">Цитата для меня</div>
+                        <div class="quote-slider-container">
+                            <div class="quote-track" id="quoteTrack">
+                                <!-- Текст будет добавлен JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-block">
+                    <div class="date-weather-row">
+                        <div class="weather-time-wrapper">
+                            <div class="time-card">
+                                <div class="time-big" id="time">10:30</div>
+                                <div class="time-date">
+                                    <div class="time-weekday" id="weekdayText">Понедельник</div>
+                                    <div class="time-fulldate" id="fulldate">24 ноября</div>
+                                </div>
+                            </div>
+
+                            <div class="weather-card">
+                                <div class="weather-main-row">
+                                    <div class="weather-icon-large" id="weather-icon"></div>
+                                    <div class="weather-main">
+                                        <div class="weather-temp" id="weather-temp">--</div>
+                                        <div class="weather-feel" id="weather-feel"></div>
+                                        <div class="weather-desc" id="weather-desc">--</div>
+                                    </div>
+                                    <div class="sun-block">
+                                        <div class="sun-row">
+                                            Восход:
+                                            <span class="sun-time" id="sunrise">--:--</span>
+                                        </div>
+                                        <div class="sun-row">
+                                            Закат:
+                                            <span class="sun-time" id="sunset">--:--</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="weather-footer">
+                                    <div class="weather-item">
+                                        <span>Ветер</span><br />
+                                        <b id="weather-wind">--</b>
+                                    </div>
+                                    <div class="weather-item">
+                                        <span>Давление</span><br />
+                                        <b id="weather-pressure">--</b>
+                                    </div>
+                                    <div class="weather-item">
+                                        <span>Влажность</span><br />
+                                        <b id="weather-humidity">--</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="entertainment-block">
+                        <div class="entertainment-vertical">
+                            <div class="entertainment-item">
+                                <div class="entertainment-wrapper">
+                                    <img src="./img/dance.gif" alt="Развлечение" id="dance-gif" />
+                                </div>
+                                <div class="entertainment-text">
+                                    <span class="first-line">Развлечение</span>
+                                    <span class="second-line">Танцуем когда не знаем что делать</span>
+                                </div>
+                            </div>
+                            <div class="entertainment-item">
+                                <div class="entertainment-wrapper">
+                                    <img src="./img/dance.gif" alt="Пауза" id="cat-gif" />
+                                </div>
+                                <div class="entertainment-text">
+                                    <span class="first-line">Пауза</span>
+                                    <span class="second-line">Смотрим на котиков во время перерыва</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-bg" id="modal-bg">
+            <div class="modal-window">
+                <span class="modal-close" id="modal-close">&times;</span>
+                <div class="modal-title" id="modal-title"></div>
+                <div class="modal-text" id="modal-text"></div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>
