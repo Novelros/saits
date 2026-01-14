@@ -16,7 +16,6 @@ body {
     animation: gradientMove 60s ease infinite;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    overflow-x: hidden;
 }
 
 @keyframes gradientMove {
@@ -32,13 +31,12 @@ body {
 }
 
 .container {
-    width: 95vw;
-    min-height: 95vh;
-    margin: 2vh auto;
+    width: 100%;
+    min-height: 100vh;
     box-sizing: border-box;
-    padding: 0 1vw;
-    transform: scale(0.95);
-    transform-origin: top center;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 1400px; /* Добавляем максимальную ширину для больших экранов */
 }
 
 .top-row {
@@ -46,8 +44,8 @@ body {
     justify-content: space-between;
     align-items: stretch;
     width: 100%;
-    padding: 15px 2vw 8px 2vw;
-    gap: 20px;
+    padding: 20px 3% 10px 3%; /* Используем проценты вместо vw */
+    gap: 30px;
     box-sizing: border-box;
 }
 
@@ -63,8 +61,8 @@ body {
 }
 
 .main-title {
-    padding: 8px 0 0 0;
-    font-size: 1.3vw;
+    padding: 10px 0 0 0;
+    font-size: clamp(14px, 1.5vw, 24px); /* Добавляем clamp для плавного изменения */
     text-align: left;
     width: 100%;
     white-space: nowrap;
@@ -76,7 +74,7 @@ body {
 .main-subtitle {
     padding: 0;
     font-weight: 800;
-    font-size: 2.8vw;
+    font-size: clamp(24px, 3vw, 48px); /* clamp для адаптивности */
     text-align: left;
     width: 100%;
     color: white;
@@ -84,8 +82,8 @@ body {
 }
 
 .main-logo {
-    width: 90px;
-    height: 90px;
+    width: 110px;
+    height: 110px;
     object-fit: contain;
     flex-shrink: 0;
 }
@@ -94,16 +92,16 @@ body {
     width: 100%;
     display: grid;
     grid-template-columns: 50% 50%;
-    gap: 1vw;
+    gap: 20px; /* Используем фиксированные px вместо vw */
     box-sizing: border-box;
-    padding: 0.5vw 1vw;
+    padding: 10px 3%; /* Проценты вместо vw */
     align-items: start;
 }
 
 .main-widgets > div:first-child {
     display: flex;
     flex-direction: column;
-    gap: 1vw;
+    gap: 20px; /* Фиксированный gap */
     width: 100%;
 }
 
@@ -115,32 +113,33 @@ body {
 
 .admission-news-title {
     color: #ffffff;
-    font-size: 2.4vw;
+    font-size: clamp(20px, 2.5vw, 36px);
     font-weight: bold;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
     text-align: center;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     width: 100%;
 }
 
 .important-block {
-    border-radius: 22px;
+    border-radius: 26px;
     background: rgba(255, 255, 255, 0.3);
     border: 2px solid rgba(255, 255, 255, 1);
     backdrop-filter: blur(10px);
-    padding: 22px 20px 15px 20px;
+    padding: 30px 26px 20px 26px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 120px;
+    min-height: 140px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     position: relative;
     width: 90%;
+    max-width: 600px;
 }
 
 .important-content {
     width: 100%;
-    min-height: 70px;
+    min-height: 80px;
     position: relative;
     overflow: hidden;
 }
@@ -154,9 +153,9 @@ body {
 
 .partners-title {
     color: #ffffff;
-    font-size: 2.4vw;
+    font-size: clamp(20px, 2.5vw, 36px);
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     text-align: center;
     width: 100%;
 }
@@ -164,15 +163,16 @@ body {
 /* Стили для бегущей строки с цитатой */
 .quote-slider-container {
     width: 90%;
+    max-width: 600px;
     overflow: hidden;
     position: relative;
-    border-radius: 22px;
+    border-radius: 26px;
     background: rgba(255, 255, 255, 0.3);
     border: 2px solid rgba(255, 255, 255, 1);
     backdrop-filter: blur(10px);
-    padding: 18px 0;
+    padding: 20px 0;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    min-height: 100px;
+    min-height: 120px;
     display: flex;
     align-items: center;
 }
@@ -182,7 +182,7 @@ body {
     white-space: nowrap;
     animation: quote-scroll 40s linear infinite;
     padding: 0 20px;
-    font-size: 1.8vw;
+    font-size: clamp(16px, 1.8vw, 24px);
     font-weight: 500;
     color: #ffffff;
     text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
@@ -214,15 +214,15 @@ body {
 .info-block {
     display: flex;
     flex-direction: column;
-    gap: 0.8vw;
+    gap: 20px;
     height: 100%;
     width: 100%;
-    margin-top: 2.5vw;
+    margin-top: 30px;
 }
 
 .date-weather-row {
     display: flex;
-    gap: 1.5vw;
+    gap: 20px;
     align-items: stretch;
 }
 
@@ -230,29 +230,30 @@ body {
     position: relative;
     width: 100%;
     padding-top: 15px;
-    min-height: 160px;
+    min-height: 190px;
 }
 
 .time-card {
     position: absolute;
     width: 55%;
+    max-width: 300px;
     top: -20px;
     right: 15px;
     background: #ffffff;
     color: #004a99;
-    border-radius: 14px;
-    padding: 8px 15px;
+    border-radius: 16px;
+    padding: 10px 18px;
     display: flex;
     align-items: center;
     text-align: center;
-    gap: 12px;
+    gap: 14px;
     border: 3px solid #ffffff;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     z-index: 2;
 }
 
 .time-big {
-    font-size: 34px;
+    font-size: clamp(28px, 3vw, 40px);
     font-weight: 700;
 }
 
@@ -261,39 +262,39 @@ body {
 }
 
 .time-weekday {
-    font-size: 14px;
+    font-size: clamp(12px, 1.2vw, 16px);
     font-weight: 600;
 }
 
 .time-fulldate {
-    font-size: 12px;
+    font-size: clamp(10px, 1vw, 14px);
 }
 
 .weather-card {
     background: rgba(255, 255, 255, 0.15);
     color: #e1efff;
-    border-radius: 14px;
-    padding: 28px 15px 2px;
+    border-radius: 16px;
+    padding: 30px 18px 15px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 5px;
     position: relative;
     z-index: 1;
     text-align: center;
-    min-height: 160px;
+    min-height: 190px;
 }
 
 .weather-main-row {
     display: grid;
     grid-template-columns: auto 1fr auto;
-    gap: 8px;
+    gap: 10px;
     align-items: center;
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 
 .weather-icon-large {
-    width: 70px;
-    height: 70px;
+    width: 85px;
+    height: 85px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -309,12 +310,12 @@ body {
 .weather-main {
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 2px;
     text-align: left;
 }
 
 .weather-temp {
-    font-size: 28px;
+    font-size: clamp(28px, 3vw, 34px);
     font-weight: 800;
     color: #ffffff;
     text-shadow: 
@@ -326,7 +327,7 @@ body {
 }
 
 .weather-feel {
-    font-size: 12px;
+    font-size: clamp(11px, 1.1vw, 14px);
     color: #b3d9ff;
     font-weight: 500;
     text-shadow: 
@@ -338,7 +339,7 @@ body {
 }
 
 .weather-desc {
-    font-size: 13px;
+    font-size: clamp(12px, 1.2vw, 15px);
     color: #ffffff;
     font-weight: 500;
     text-shadow: 
@@ -351,10 +352,10 @@ body {
 
 .sun-block {
     text-align: right;
-    font-size: 11px;
+    font-size: clamp(10px, 1vw, 13px);
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
 }
 
 .sun-row {
@@ -383,23 +384,23 @@ body {
 .weather-footer {
     display: flex;
     justify-content: space-between;
-    gap: 3px;
-    font-size: 11px;
-    margin-top: 3px;
-    padding-top: 5px;
+    gap: 10px;
+    font-size: clamp(10px, 1vw, 13px);
+    margin-top: 10px;
+    padding-top: 8px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .weather-item {
     flex: 1;
-    padding: 1px;
+    text-align: center;
 }
 
 .weather-item span {
     color: #b3d9ff;
     margin: 0;
     display: block;
-    font-size: 10px;
+    font-size: clamp(9px, 0.9vw, 12px);
     font-weight: 600;
     text-shadow: 
         1px 1px 0 #000,
@@ -407,15 +408,14 @@ body {
         1px -1px 0 #000,
         -1px 1px 0 #000,
         1px 1px 2px #000;
-    letter-spacing: 0.1px;
 }
 
 .weather-item b {
     color: #ffffff;
-    font-size: 12px;
+    font-size: clamp(11px, 1.1vw, 14px);
     font-weight: 800;
     display: block;
-    margin-top: 0;
+    margin-top: 2px;
     text-shadow: 
         1px 1px 0 #000,
         -1px -1px 0 #000,
@@ -424,60 +424,77 @@ body {
         1px 1px 3px #000;
 }
 
-.qr-codes-block {
-    margin-top: 0.3vw;
-    margin-left: 6vw;
+.entertainment-block {
+    margin-top: 20px;
+    margin-left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
-.qr-codes-vertical {
+.entertainment-vertical {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    align-items: flex-start;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
 }
 
-.qr-item {
+.entertainment-item {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 20px;
     background: transparent;
     border: none;
     backdrop-filter: none;
     padding: 0;
     box-shadow: none;
-    margin-left: 4px;
+    width: 100%;
+    justify-content: center;
 }
 
-.qr-code-wrapper {
+.entertainment-wrapper {
     background: transparent;
     border-radius: 0;
     border: none;
     backdrop-filter: none;
     padding: 0;
     box-shadow: none;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
-.qr-code-wrapper img {
-    width: 95px;
-    height: 95px;
+.entertainment-wrapper img {
+    width: 140px;
+    height: 140px;
     object-fit: contain;
 }
 
-.qr-text {
+.entertainment-text {
     color: #ffffff;
-    font-size: 0.95vw;
-    line-height: 1.3;
+    font-size: clamp(14px, 1.2vw, 18px);
+    line-height: 1.4;
     flex: 1;
+    max-width: 300px;
 }
 
-.qr-text .first-line {
+.entertainment-text .first-line {
     font-weight: normal;
     display: block;
+    margin-bottom: 5px;
 }
 
-.qr-text .second-line {
+.entertainment-text .second-line {
     font-weight: bold;
     display: block;
+}
+
+#dance-gif,
+#cat-gif {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
 }
 
 .modal-bg {
@@ -495,34 +512,34 @@ body {
 
 .modal-window {
     background: #f3faff;
-    border-radius: 16px;
-    max-width: 350px;
-    padding: 25px 20px 15px;
+    border-radius: 18px;
+    max-width: 400px;
+    padding: 30px 24px 18px;
     box-shadow: 0 8px 32px #377ce099;
     text-align: center;
     position: relative;
 }
 
 .modal-title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     color: #1563b5;
 }
 
 .modal-close {
     position: absolute;
-    right: 10px;
-    top: 10px;
-    font-size: 22px;
+    right: 12px;
+    top: 12px;
+    font-size: 26px;
     color: #174fb6;
     cursor: pointer;
 }
 
 .modal-text {
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .bg-words {
@@ -556,7 +573,7 @@ body {
 }
 
 .news-item {
-    padding: 6px 15px;
+    padding: 10px 15px;
     text-align: left;
     opacity: 1;
     transform: translateX(0);
@@ -564,17 +581,17 @@ body {
 }
 
 .news-title {
-    font-size: 1.5vw;
+    font-size: clamp(16px, 1.6vw, 24px);
     color: #ffffff;
     line-height: 1.4;
     font-weight: 700;
-    margin-bottom: 2px;
+    margin-bottom: 5px;
     text-align: left;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .news-date {
-    font-size: 0.95vw;
+    font-size: clamp(12px, 1.1vw, 16px);
     color: #b3d9ff;
     font-weight: 500;
     text-align: left;
@@ -592,20 +609,20 @@ body {
     }
     to {
         opacity: 0;
-        transform: translateX(-80px);
+        transform: translateX(-100px);
     }
 }
 
 .news-slide-in {
     animation: newsSlideIn 0.5s ease forwards;
     opacity: 0;
-    transform: translateX(80px);
+    transform: translateX(100px);
 }
 
 @keyframes newsSlideIn {
     from {
         opacity: 0;
-        transform: translateX(80px);
+        transform: translateX(100px);
     }
     to {
         opacity: 1;
@@ -615,17 +632,17 @@ body {
 
 .news-pagination {
     position: absolute;
-    right: 12px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
 }
 
 .news-dot {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 1);
@@ -641,282 +658,20 @@ body {
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
 }
 
-#cat-gif {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.entertainment-block {
-    margin-top: 0.3vw;
-    margin-left: 6vw;
-}
-
-.entertainment-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: flex-start;
-}
-
-.entertainment-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: transparent;
-    border: none;
-    backdrop-filter: none;
-    padding: 0;
-    box-shadow: none;
-    margin-left: 4px;
-}
-
-.entertainment-wrapper {
-    background: transparent;
-    border-radius: 0;
-    border: none;
-    backdrop-filter: none;
-    padding: 0;
-    box-shadow: none;
-    overflow: hidden;
-}
-
-.entertainment-wrapper img {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-}
-
-.entertainment-text {
-    color: #ffffff;
-    font-size: 0.95vw;
-    line-height: 1.3;
-    flex: 1;
-}
-
-.entertainment-text .first-line {
-    font-weight: normal;
-    display: block;
-}
-
-.entertainment-text .second-line {
-    font-weight: bold;
-    display: block;
-}
-
-#dance-gif,
-#cat-gif {
-    width: 110px;
-    height: 110px;
-    object-fit: contain;
-}
-
-/* Адаптивность */
-@media (max-width: 1100px) {
-    .container {
-        width: 97vw;
-        min-height: 97vh;
-        transform: scale(0.97);
-    }
-    
+/* Адаптивность для планшетов и ноутбуков */
+@media (max-width: 1200px) {
     .main-widgets {
         grid-template-columns: 1fr;
-        gap: 2vw;
+        gap: 25px;
     }
     
     .weather-time-wrapper {
-        min-height: 150px;
-    }
-    
-    .time-card {
-        width: 65%;
-        right: 12px;
-        padding: 6px 12px;
+        min-height: 180px;
     }
     
     .weather-icon-large {
-        width: 65px;
-        height: 65px;
-    }
-    
-    .weather-temp {
-        font-size: 26px;
-    }
-    
-    .weather-desc {
-        font-size: 12px;
-    }
-    
-    .weather-card {
-        min-height: 150px;
-        padding: 24px 12px 2px;
-    }
-    
-    .quote-track {
-        font-size: 2.2vw;
-    }
-    
-    .partners-title,
-    .admission-news-title {
-        font-size: 2.8vw;
-    }
-    
-    .main-title {
-        font-size: 1.6vw;
-    }
-    
-    .main-subtitle {
-        font-size: 3.2vw;
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        width: 100vw;
-        min-height: 100vh;
-        margin: 1vh auto;
-        padding: 0 2vw;
-        transform: scale(1);
-    }
-    
-    .top-row {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 2vw 5px;
-    }
-    
-    .main-title-card {
-        text-align: center;
-        align-items: center;
-    }
-    
-    .main-title {
-        font-size: 4vw;
-        text-align: center;
-        white-space: normal;
-        padding: 5px 0 0 0;
-    }
-    
-    .main-subtitle {
-        font-size: 6vw;
-        text-align: center;
-    }
-    
-    .main-logo {
-        width: 70px;
-        height: 70px;
-        order: -1;
-        margin-bottom: 10px;
-    }
-    
-    .main-widgets {
-        grid-template-columns: 1fr;
-        gap: 3vw;
-        padding: 1vw 2vw;
-    }
-    
-    .weather-temp {
-        font-size: 24px;
-    }
-    
-    .time-big {
-        font-size: 28px;
-    }
-    
-    .time-card {
-        width: 75%;
-        padding: 6px 10px;
-        top: -15px;
-        right: 10px;
-    }
-    
-    .weather-main-row {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 4px;
-    }
-    
-    .weather-icon-large {
-        width: 60px;
-        height: 60px;
-        margin: 0 auto;
-        order: -1;
-    }
-    
-    .weather-main {
-        text-align: center;
-        order: 0;
-    }
-    
-    .sun-block {
-        text-align: center;
-        margin-top: 4px;
-        order: 1;
-    }
-    
-    .weather-footer {
-        flex-direction: column;
-        gap: 2px;
-        margin-top: 6px;
-        padding-top: 4px;
-    }
-    
-    .weather-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 3px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .weather-item:last-child {
-        border-bottom: none;
-    }
-    
-    .weather-item span,
-    .weather-item b {
-        margin: 0;
-    }
-    
-    .qr-text {
-        font-size: 3vw;
-    }
-    
-    .entertainment-text {
-        font-size: 3vw;
-    }
-    
-    .important-block {
-        padding: 15px 12px 6px;
-        min-height: 110px;
-        width: 100%;
-    }
-    
-    .quote-slider-container {
-        padding: 12px 0;
-        min-height: 90px;
-        width:100%;
-    }
-    
-    .quote-track {
-        font-size: 3.8vw;
-        animation-duration: 50s;
-    }
-    
-    .partners-title,
-    .admission-news-title {
-        font-size: 4.5vw;
-        margin-bottom: 10px;
-    }
-    
-    .news-title {
-        font-size: 3.5vw;
-    }
-    
-    .news-date {
-        font-size: 2.8vw;
+        width: 75px;
+        height: 75px;
     }
     
     .entertainment-wrapper img,
@@ -925,12 +680,247 @@ body {
         width: 120px;
         height: 120px;
     }
+}
+
+/* Адаптивность для планшетов */
+@media (max-width: 992px) {
+    .top-row {
+        padding: 15px 4% 8px 4%;
+    }
+    
+    .main-widgets {
+        padding: 10px 4%;
+    }
+    
+    .weather-card {
+        padding: 25px 15px 10px;
+    }
     
     .entertainment-item {
-        gap: 10px;
+        gap: 15px;
+    }
+    
+    .entertainment-wrapper img,
+    #dance-gif,
+    #cat-gif {
+        width: 110px;
+        height: 110px;
+    }
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 0;
+    }
+    
+    .top-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 10px 5% 5px;
+    }
+    
+    .main-title-card {
+        text-align: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .main-title {
+        font-size: 16px;
+        text-align: center;
+        white-space: normal;
+        padding: 5px 0 0 0;
+    }
+    
+    .main-subtitle {
+        font-size: 28px;
+        text-align: center;
+        line-height: 1.2;
+    }
+    
+    .main-logo {
+        width: 80px;
+        height: 80px;
+        order: -1;
+        margin-bottom: 10px;
+    }
+    
+    .main-widgets {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 10px 5%;
+    }
+    
+    .main-widgets > div:first-child {
+        gap: 20px;
+    }
+    
+    .admission-news-title,
+    .partners-title {
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+    
+    .important-block,
+    .quote-slider-container {
+        width: 100%;
+        padding: 20px 15px 15px;
+        min-height: 110px;
+    }
+    
+    .quote-track {
+        font-size: 18px;
+        animation-duration: 50s;
+    }
+    
+    .weather-time-wrapper {
+        min-height: 170px;
+        padding-top: 10px;
+    }
+    
+    .time-card {
+        width: 85%;
+        top: -15px;
+        right: 10px;
+        padding: 8px 12px;
+    }
+    
+    .time-big {
+        font-size: 28px;
+    }
+    
+    .weather-card {
+        padding: 25px 12px 10px;
+        min-height: 170px;
+    }
+    
+    .weather-main-row {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 8px;
+    }
+    
+    .weather-icon-large {
+        width: 70px;
+        height: 70px;
+        margin: 0 auto;
+        order: -1;
+    }
+    
+    .weather-main {
+        text-align: center;
+        order: 0;
+        align-items: center;
+    }
+    
+    .weather-temp {
+        font-size: 30px;
+    }
+    
+    .sun-block {
+        text-align: center;
+        margin-top: 8px;
+        order: 1;
+        align-items: center;
+    }
+    
+    .weather-footer {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+    
+    .weather-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 5px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+    }
+    
+    .weather-item:last-child {
+        border-bottom: none;
+    }
+    
+    .entertainment-block {
+        margin-top: 15px;
     }
     
     .entertainment-vertical {
-        gap: 8px;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .entertainment-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    .entertainment-wrapper img,
+    #dance-gif,
+    #cat-gif {
+        width: 130px;
+        height: 130px;
+    }
+    
+    .entertainment-text {
+        text-align: center;
+        font-size: 16px;
+    }
+    
+    .news-title {
+        font-size: 18px;
+    }
+    
+    .news-date {
+        font-size: 14px;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+    .main-subtitle {
+        font-size: 24px;
+    }
+    
+    .admission-news-title,
+    .partners-title {
+        font-size: 20px;
+    }
+    
+    .time-card {
+        width: 90%;
+    }
+    
+    .time-big {
+        font-size: 24px;
+    }
+    
+    .weather-temp {
+        font-size: 26px;
+    }
+    
+    .quote-track {
+        font-size: 16px;
+    }
+    
+    .entertainment-wrapper img,
+    #dance-gif,
+    #cat-gif {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .entertainment-text {
+        font-size: 14px;
     }
 }
